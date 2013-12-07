@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<script>
+function id_decoder()
+{
+
+	var ALPHABET_VA = "abcdefghjkmnpqrstuvwxyz23456789";
+
+	var text = document.getElementById("decoded_num");
+	var encoded_str = document.getElementById("encoded_str");
+	var encoded_str = encoded_str.value.toLowerCase();
+	text.innerHTML = "";
+
+	if (encoded_str.length < 4)
+	{
+		text.innerHTML = text.innerHTML + " Invalid id, check your input</br>";
+		return false;
+	}
+
+	var encoded_str_no_prefix = encoded_str.slice(3);
+	var version = encoded_str.slice(2,3);
+	var id_type = encoded_str.slice(0,2);
+
+
+	var set_len = ALPHABET_VA.length
+
+	var result = 0;
+
+	for(i=0; i<encoded_str_no_prefix.length; i++) {
+		result = result * set_len + ALPHABET_VA.indexOf(encoded_str_no_prefix.charAt(i));
+	}
+
+	if (id_type == "ps")
+	{
+		text.innerHTML = text.innerHTML + "This is a problem set </br>";
+	}
+	else if (id_type == "pr")
+	{
+		text.innerHTML = text.innerHTML + "This is a problem </br>";
+	}
+
+	if (version == "a")
+	{
+		text.innerHTML = text.innerHTML + "Encoded by version A algorithm </br>";
+	}
+
+	text.innerHTML = text.innerHTML + "id is " + result + "</br>";
+
+	return true;
+
+}
+
+function id_encoder()
+{
+
+	var ALPHABET_VA = "abcdefghjkmnpqrstuvwxyz23456789";
+
+	var text = document.getElementById("encoded_result");
+	var p_type = document.getElementById("p_type").value;
+	var num_id = parseInt(document.getElementById("number_id").value);
+	var encoded_result = "";
+	text.innerHTML = "";
+
+	var set_len = ALPHABET_VA.length
+	while (num_id > 0)
+	{
+  		encoded_result = encoded_result + ALPHABET_VA.charAt(num_id % set_len);
+  		num_id = parseInt(num_id / set_len);
+  	}
+
+  	encoded_result = p_type + "a" + encoded_result.split("").reverse().join("");
+ 
+	text.innerHTML = text.innerHTML + "str is " + encoded_result.toUpperCase() + "</br>";
+
+	return true;
+
+}
+
+</script>
+</head>
+
+
+<body>
+
+<h1>Encoded str to int</h1>
+
+Encoded str: <input type="text" id = "encoded_str" name="encoded_str">
+<button type="button" onclick="id_decoder()">Decode!</button>
+
+<p id = 'decoded_num'>  </p>
+
+</br>
+
+<select id = "p_type" name="p_type">
+  <option value="ps"> Problem Set (PS) </option>
+  <option value="pr"> Problem (PR) </option>
+</select>
+
+Number ID: <input type="text" id = "number_id" name="number_id">
+<button type="button" onclick="id_encoder()">Encode!</button>
+
+<p id = 'encoded_result'>  </p>
+
+</body>
+</html>
