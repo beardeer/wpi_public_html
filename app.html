@@ -11,7 +11,7 @@ function id_decoder()
 
 	var text = document.getElementById("decoded_num");
 	var encoded_str = document.getElementById("encoded_str");
-	var encoded_str = encoded_str.value.toLowerCase();
+	var encoded_str = encoded_str.value.trim().toLowerCase();
 	text.innerHTML = "";
 
 	if (encoded_str.length < 4)
