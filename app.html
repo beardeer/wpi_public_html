@@ -10,29 +10,38 @@ function id_decoder()
 	var ALPHABET_VA = "abcdefghjkmnpqrstuvwxyz23456789";
 
 	var text = document.getElementById("decoded_num");
-	var encoded_str = document.getElementById("encoded_str");
-	var encoded_str = encoded_str.value.trim().toLowerCase();
+	var encoded_strs = document.getElementById("encoded_strs").value;
 	text.innerHTML = "";
 
+	var str_array = encoded_strs.split(",");
+
+	/*
 	if (encoded_str.length < 4)
 	{
 		text.innerHTML = text.innerHTML + " Invalid id, check your input</br>";
 		return false;
 	}
+	*/
 
-	var encoded_str_no_prefix = encoded_str.slice(3);
-	var version = encoded_str.slice(2,3);
-	var id_type = encoded_str.slice(0,2);
+	for (var l = 0; l<str_array.length; l++)
+	{
+		var encoded_str = str_array[l];
+		encoded_str = encoded_str.trim().toLowerCase();
+		var result = 0;
 
 
-	var set_len = ALPHABET_VA.length
+		var encoded_str_no_prefix = encoded_str.slice(3);
+		//var version = encoded_str.slice(2,3);
+		//var id_type = encoded_str.slice(0,2);
 
-	var result = 0;
 
-	for(i=0; i<encoded_str_no_prefix.length; i++) {
-		result = result * set_len + ALPHABET_VA.indexOf(encoded_str_no_prefix.charAt(i));
-	}
+		var set_len = ALPHABET_VA.length;
 
+		for(i=0; i<encoded_str_no_prefix.length; i++) {
+			result = result * set_len + ALPHABET_VA.indexOf(encoded_str_no_prefix.charAt(i));
+		}
+
+	/*
 	if (id_type == "ps")
 	{
 		text.innerHTML = text.innerHTML + "This is a problem set </br>";
@@ -46,8 +55,12 @@ function id_decoder()
 	{
 		text.innerHTML = text.innerHTML + "Encoded by version A algorithm </br>";
 	}
+	*/
+		text.innerHTML = text.innerHTML + "," + result.toString();
 
-	text.innerHTML = text.innerHTML + "id is " + result + "</br>";
+	}
+	
+	text.innerHTML = text.innerHTML.slice(1);
 
 	return true;
 
@@ -85,6 +98,8 @@ function id_encoder()
 
 	}
 
+	text.innerHTML = text.innerHTML.slice(1);
+
 	return true;
 
 }
@@ -97,7 +112,7 @@ function id_encoder()
 
 <h1>Encoded str to int</h1>
 
-Encoded str: <input type="text" id = "encoded_str" name="encoded_str">
+Encoded str: <input type="text" id = "encoded_strs" name="encoded_strs">
 <button type="button" onclick="id_decoder()">Decode!</button>
 
 <p id = 'decoded_num'>  </p>
