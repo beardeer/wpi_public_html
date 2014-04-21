@@ -60,20 +60,30 @@ function id_encoder()
 
 	var text = document.getElementById("encoded_result");
 	var p_type = document.getElementById("p_type").value;
-	var num_id = parseInt(document.getElementById("number_id").value);
-	var encoded_result = "";
+	var num_ids = document.getElementById("number_id").value;
 	text.innerHTML = "";
 
-	var set_len = ALPHABET_VA.length
-	while (num_id > 0)
-	{
-  		encoded_result = encoded_result + ALPHABET_VA.charAt(num_id % set_len);
-  		num_id = parseInt(num_id / set_len);
-  	}
+	var num_array = num_ids.split(",");
+	var arrayLength = num_array.length;
 
-  	encoded_result = p_type + "a" + encoded_result.split("").reverse().join("");
+	var set_len = ALPHABET_VA.length;
+
+	for (var i = 0; i<arrayLength; i++)
+	{
+		var num_id = parseInt(num_array[i]);
+		var encoded_result = "";
+
+		while (num_id > 0)
+		{
+  			encoded_result = encoded_result + ALPHABET_VA.charAt(num_id % set_len);
+  			num_id = parseInt(num_id / set_len);
+  		}
+
+  		encoded_result = p_type + "a" + encoded_result.split("").reverse().join("");
  
-	text.innerHTML = text.innerHTML + "str is " + encoded_result.toUpperCase() + "</br>";
+		text.innerHTML = text.innerHTML + "," + encoded_result.toUpperCase();
+
+	}
 
 	return true;
 
